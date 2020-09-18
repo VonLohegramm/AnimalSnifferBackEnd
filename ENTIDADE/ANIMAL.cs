@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ENTIDADE
 {
@@ -25,5 +22,7 @@ namespace ENTIDADE
         public string IMAGEM;
         [JsonProperty(PropertyName = "ativo")]
         public bool ATIVO;
+        [JsonProperty(PropertyName = "idUsuario")]
+        public int IDUSUARIO;
     }
 }

@@ -12,6 +12,21 @@ namespace BLL
 
         public void CadastrarAnimal(ANIMAL animal)
         {
+            if (string.IsNullOrEmpty(animal.LATITUDE))
+                throw new Exception("Informe a latitude");
+
+            if (string.IsNullOrEmpty(animal.LONGITUDE))
+                throw new Exception("Informe a longitude");
+
+            if (string.IsNullOrEmpty(animal.RACA))
+                throw new Exception("Informe a raça do animal");
+
+            if (string.IsNullOrEmpty(animal.TIPO))
+                throw new Exception("Informe o tipo de animal");
+
+            if (animal.IDUSUARIO == 0)
+                throw new Exception("Informe o usuário(ID) que está fazendo o cadastrado");
+
             animal_db.InserirAnimal(animal);
         }
 

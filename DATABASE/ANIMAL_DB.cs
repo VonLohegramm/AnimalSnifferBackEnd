@@ -24,7 +24,7 @@ namespace DATABASE
         #region InserirUsuario
         public void InserirAnimal(ANIMAL animal)
         {
-            string insert = "insert into ANIMAL(tipo, raca, sexo, descricao, latitude, longitude, imagem) values(@tipo, @raca, @sexo, @descricao, @latitude, @longitude, @imagem);";
+            string insert = "insert into ANIMAL(tipo, raca, sexo, descricao, latitude, longitude, imagem, idusuario) values(@tipo, @raca, @sexo, @descricao, @latitude, @longitude, @imagem, @idusuario);";
 
             try
             {
@@ -37,7 +37,8 @@ namespace DATABASE
                     { "@longitude", animal.LONGITUDE },
                     { "@imagem", animal.IMAGEM },
                     { "@descricao",  animal.DESCRICAO },
-                    { "@ativo", true }
+                    { "@ativo", true },
+                    { "@idusuario", animal.IDUSUARIO }
                 };
 
                 QueryTableMySQL(insert, values);
@@ -98,6 +99,7 @@ namespace DATABASE
                     animal.LATITUDE = dt.Rows[0]["latitude"].ToString();
                     animal.LONGITUDE = dt.Rows[0]["longitude"].ToString();
                     animal.SEXO = dt.Rows[0]["sexo"].ToString();
+                    animal.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idusuario"].ToString());
                 }
 
                 return animal;
@@ -136,6 +138,7 @@ namespace DATABASE
                     animal.LATITUDE = row["latitude"].ToString();
                     animal.LONGITUDE = row["longitude"].ToString();
                     animal.SEXO = row["sexo"].ToString();
+                    animal.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idusuario"].ToString());
 
                     animais.Add(animal);
                     animal = new ANIMAL();
