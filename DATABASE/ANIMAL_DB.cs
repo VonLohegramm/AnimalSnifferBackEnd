@@ -134,11 +134,11 @@ namespace DATABASE
                     animal.RACA = row["raca"].ToString();
                     animal.TIPO = row["tipo"].ToString();
                     animal.DESCRICAO = row["descricao"].ToString();
-                    animal.IMAGEM = row["image"].ToString();
+                    animal.IMAGEM = row["imagem"].ToString();
                     animal.LATITUDE = row["latitude"].ToString();
                     animal.LONGITUDE = row["longitude"].ToString();
                     animal.SEXO = row["sexo"].ToString();
-                    animal.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idusuario"].ToString());
+                    animal.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idusuario"]);
 
                     animais.Add(animal);
                     animal = new ANIMAL();
