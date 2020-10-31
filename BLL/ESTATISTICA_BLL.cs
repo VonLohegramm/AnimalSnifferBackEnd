@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using System.Text;
 
 namespace BLL
 {
@@ -20,11 +20,12 @@ namespace BLL
             client = _clientFactory.CreateClient();
         }
 
-        public void CarregarEstatistica()
+        public Dictionary<string, int> CarregarEstatistica()
         {
             ANIMAL_BLL animal_bll = new ANIMAL_BLL();
 
             List<ANIMAL> animais = animal_bll.CarregarAnimais();
+            List<Dictionary<string, int>> racas;
 
             Dictionary<string, int> cidades = new Dictionary<string, int>
             {
@@ -32,6 +33,58 @@ namespace BLL
                 { "Itu", 0 },
                 { "Indaiatuba", 0 }
             };
+
+            Dictionary<string, int> animaisInfo = new Dictionary<string, int>
+            {
+                { "Total",  0 },
+                { "Macho", 0 },
+                { "Femea", 0 },
+                { "Indefinido", 0 },
+                { "Cachorro", 0 },
+                { "Gato", 0 }
+            };
+
+            Dictionary<string, int> RacaCachorroInfo = new Dictionary<string, int>
+            {
+                { "Labrador",  0 },
+                { "Rottweiler", 0 },
+                { "Golden Retriever", 0 },
+                { "Vira Lata", 0 },
+                { "Poodle", 0 },
+                { "Pastor Alemão", 0 },
+                { "Spitz Alemão", 0 },
+                { "Buldogue", 0 },
+                { "Shih-Tzu",0 },
+                { "Maltês", 0 },
+                { "Indefinido", 0 }
+            };
+
+            Dictionary<string, int> RacaGatoInfo = new Dictionary<string, int>
+            {
+                { "Persa",  0 },
+                { "Siamês", 0 },
+                { "Vira-lata", 0 },
+                { "Siberiano", 0 },
+                { "Sphynx", 0 },
+                { "Angorá", 0 },
+                { "Abissínio", 0 },
+                { "Indefinido", 0 }
+            };
+
+            cidades = calcularEstastiscaCidade(animais, cidades);
+            animaisInfo = calcularEstatisticaAnimal(animais, animaisInfo);
+            racas = calcularEstatisticasRaca(animais, RacaCachorroInfo, RacaGatoInfo);
+
+            RacaCachorroInfo = racas[0];
+            RacaGatoInfo = racas[1];
+
+            return cidades.Union(animaisInfo).ToDictionary(k => k.Key, v => v.Value).Union(RacaCachorroInfo).ToDictionary(k => k.Key, v => v.Value)
+                .Union(RacaGatoInfo).ToDictionary(k => k.Key, v => v.Value);
+
+        }
+
+        public Dictionary<string, int> calcularEstastiscaCidade(List<ANIMAL> animais, Dictionary<string, int> cidades)
+        {
 
             List<string> nomeCidades = new List<string>(cidades.Keys);
 
@@ -45,43 +98,115 @@ namespace BLL
 
                 string latlng = latitude + "," + longitude;
 
-                JObject jsonObject = JsonConvert.DeserializeObject<JObject>(RetornaJson());
-
-                JArray address = jsonObject["results"][0]["address_components"] as JArray;
-
-                foreach(var ad in address)
+                using (HttpResponseMessage res = client.GetAsync($"https://maps.googleapis.com/maps/api/geocode/json?latlng={latlng}&key={key}").Result)
                 {
-                    foreach (var nome in nomeCidades)
+                    if (res.IsSuccessStatusCode)
                     {
-                        int qtd = ad["long_name"].ToString() == nome ? cidades[nome] + 1 : 0;
+                        //string json = res.Content.ReadAsStringAsync().Result;
+                        JObject jsonObject = JsonConvert.DeserializeObject<JObject>(res.Content.ReadAsStringAsync().Result);
 
-                        if(qtd > 0)
+                        JArray address = jsonObject["results"][0]["address_components"] as JArray;
+
+                        foreach (var ad in address)
                         {
-                            cidades[nome] = qtd;
+                            foreach (var nome in nomeCidades)
+                            {
+                                int qtd = ad["long_name"].ToString() == nome ? cidades[nome] + 1 : 0;
+
+                                if (qtd > 0)
+                                {
+                                    cidades[nome] = qtd;
+                                }
+                            }
                         }
                     }
+                    else
+                    {
+                        Exception ex = JsonConvert.DeserializeObject<Exception>(res.Content.ReadAsStringAsync().Result);
+                        throw ex;
+                    }
+                }
+            }
+
+            return cidades;
+        }
+
+        public Dictionary<string, int> calcularEstatisticaAnimal(List<ANIMAL> animais, Dictionary<string, int> animaisInfo)
+        {
+            animaisInfo["Total"] = animais.Count;
+
+            foreach(var animal in animais)
+            {
+                switch(animal.SEXO)
+                {
+                    case "F":
+                        animaisInfo["Femea"] = animaisInfo["Femea"] + 1;
+                        break;
+                    case "M":
+                        animaisInfo["Macho"] = animaisInfo["Macho"] + 1;
+                        break;
+                    case "I":
+                        animaisInfo["Indefinido"] = animaisInfo["Indefinido"] + 1;
+                        break;
+                    default:
+                        break;
                 }
 
-                Console.WriteLine(cidades);
-
-
-
-                //using (HttpResponseMessage res = client.GetAsync($"https://maps.googleapis.com/maps/api/geocode/json?latlng={latlng}&key={key}").Result)
-                //{
-                //    if (res.IsSuccessStatusCode)
-                //    {
-                //        string json = res.Content.ReadAsStringAsync().Result;
-                //        JObject valor = JsonConvert.DeserializeObject<JObject>(res.Content.ReadAsStringAsync().Result);
-                //        var results = valor["results"];
-
-
-                //    }
-                //    else
-                //    {
-
-                //    }
-                //}
+                switch(animal.TIPO)
+                {
+                    case "Cachorro":
+                        animaisInfo["Cachorro"] = animaisInfo["Cachorro"] + 1;
+                        break;
+                    case "Gato":
+                        animaisInfo["Gato"] = animaisInfo["Gato"] + 1;
+                        break;
+                    default:
+                        break;
+                }
             }
+
+            return animaisInfo;
+        }
+
+        public List<Dictionary<string, int>> calcularEstatisticasRaca(List<ANIMAL> animais, Dictionary<string, int> RacaCachorroInfo,
+            Dictionary<string, int> RacaGatoInfo)
+        {
+            List<Dictionary<string, int>> racas = new List<Dictionary<string, int>>();
+
+            List<string> racasGatos = new List<string>(RacaGatoInfo.Keys);
+
+            List<string> racasCachorros = new List<string>(RacaCachorroInfo.Keys);
+
+            foreach (var animal in animais)
+            {
+                switch(animal.TIPO)
+                {
+                    case "Cachorro":
+                        foreach (var raca in racasCachorros)
+                        {
+                            if(raca == animal.RACA)
+                            {
+                                RacaCachorroInfo[raca] = RacaCachorroInfo[raca] + 1;
+                            }
+                        }
+                        break;
+
+                    case "Gato":
+                        foreach (var raca in racasGatos)
+                        {
+                            if (raca == animal.RACA)
+                            {
+                                RacaGatoInfo[raca] = RacaGatoInfo[raca] + 1;
+                            }
+                        }
+                        break;
+                }
+            }
+
+            racas.Add(RacaCachorroInfo);
+            racas.Add(RacaGatoInfo);
+
+            return racas;
         }
 
         public string RetornaJson()

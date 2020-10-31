@@ -27,9 +27,7 @@ namespace AnimalSniffer.Controllers
             try
             {
                 estatistica_bll = new ESTATISTICA_BLL(_clientFactory);
-                estatistica_bll.CarregarEstatistica();
-
-                string[,] array = new string[,] { { "key", "valor" }, { "key2", "valor2" } };
+                var array = estatistica_bll.CarregarEstatistica();
 
                 return new ObjectResult(array);
             }
