@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace ENTIDADE
 {
@@ -24,5 +25,7 @@ namespace ENTIDADE
         public bool ATIVO;
         [JsonProperty(PropertyName = "idUsuario")]
         public int IDUSUARIO;
+        [JsonProperty(PropertyName = "avaliacoes")]
+        public List<AVALIACAO> AVALIACOES;
     }
 }

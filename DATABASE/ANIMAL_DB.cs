@@ -21,7 +21,7 @@ namespace DATABASE
         }
         #endregion
 
-        #region InserirUsuario
+        #region InserirAnimal
         public void InserirAnimal(ANIMAL animal)
         {
             string insert = "insert into ANIMAL(tipo, raca, sexo, descricao, latitude, longitude, imagem, idusuario) values(@tipo, @raca, @sexo, @descricao, @latitude, @longitude, @imagem, @idusuario);";

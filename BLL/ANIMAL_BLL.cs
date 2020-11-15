@@ -9,6 +9,7 @@ namespace BLL
     public class ANIMAL_BLL
     {
         private ANIMAL_DB animal_db = new ANIMAL_DB();
+        private AVALIACAO_BLL avaliacao_bll = new AVALIACAO_BLL();
 
         public void CadastrarAnimal(ANIMAL animal)
         {
@@ -48,7 +49,14 @@ namespace BLL
 
         public List<ANIMAL> CarregarAnimais()
         {
-            return animal_db.SelecionarAnimaisAtivos();
+            List<ANIMAL> animais = animal_db.SelecionarAnimaisAtivos();
+            
+            foreach(var animal in animais)
+            {
+                animal.AVALIACOES = avaliacao_bll.CarregarAvaliacoesAnimal(animal);
+            }
+
+            return animais;
         }
     }
 }
