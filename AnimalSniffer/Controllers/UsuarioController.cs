@@ -31,7 +31,7 @@ namespace AnimalSniffer.Controllers
             }
         }
 
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         public IActionResult LoginUsuario(USUARIO usuario)
         {
             try
