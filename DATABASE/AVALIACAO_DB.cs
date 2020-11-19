@@ -137,6 +137,10 @@ namespace DATABASE
             {
                 throw;
             }
+            finally
+            {
+                CloseConnection();
+            }
         }
         #endregion
 
@@ -166,7 +170,19 @@ namespace DATABASE
             {
                 throw;
             }
+            finally
+            {
+                CloseConnection();
+            }
         }
         #endregion
+
+        #region CloseConnection
+        public void CloseConnection()
+        {
+            connectionMySQL.Close();
+        }
+        #endregion
+
     }
 }
