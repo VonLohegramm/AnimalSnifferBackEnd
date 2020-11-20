@@ -24,13 +24,14 @@ namespace DATABASE
         #region InserirUsuario
         public void InserirUsuarioBancoDados(USUARIO usuario)
         {
-            string insert = "insert into USUARIO (nome, senha, email) values (@nome, @senha, @email);";
+            string insert = "insert into USUARIO (nome, cpf, senha, email) values (@nome, @cpf, @senha, @email);";
 
             try
             {
                 Dictionary<string, object> values = new Dictionary<string, object>
                 {
                     { "@nome",  usuario.NOME },
+                    { "@cpf", usuario.CPF },
                     { "@email", usuario.EMAIL },
                     { "@senha", usuario.SENHA }
                 };
@@ -48,7 +49,7 @@ namespace DATABASE
         #region LoginUsuario
         public USUARIO SelectLoginBancoDados(USUARIO usuario)
         {
-            string select = "select id, nome, email from USUARIO where email = @email and senha = @senha;";
+            string select = "select id, nome, cpf, email from USUARIO where email = @email and senha = @senha;";
 
             try
             {
@@ -63,6 +64,7 @@ namespace DATABASE
                 if (dt.Rows.Count > 0)
                 {
                     usuario.NOME = dt.Rows[0]["nome"].ToString();
+                    usuario.CPF = dt.Rows[0]["cpf"].ToString();
                     usuario.EMAIL = dt.Rows[0]["email"].ToString();
                     usuario.ID = Convert.ToInt32(dt.Rows[0]["id"]);
                     usuario.SENHA = "";

@@ -27,6 +27,11 @@ namespace BLL
                 throw new Exception("Informe o email do usuário");
             }
 
+            if (string.IsNullOrEmpty(usuario.CPF))
+            {
+                throw new Exception("Informe o CPF do usuário");
+            }
+
             usuario_db.InserirUsuarioBancoDados(usuario);
         }
 
