@@ -97,8 +97,8 @@ namespace DATABASE
                     animal.DESCRICAO = dt.Rows[0]["descricao"].ToString();
                     byte[] an = (byte[])dt.Rows[0]["imagem"];
                     animal.IMAGEM = System.Text.Encoding.UTF8.GetString(an);
-                    animal.LATITUDE = dt.Rows[0]["latitude"].ToString();
-                    animal.LONGITUDE = dt.Rows[0]["longitude"].ToString();
+                    animal.LATITUDE = Convert.ToDecimal(dt.Rows[0]["latitude"]);
+                    animal.LONGITUDE = Convert.ToDecimal(dt.Rows[0]["longitude"]);
                     animal.SEXO = dt.Rows[0]["sexo"].ToString();
                     animal.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idusuario"].ToString());
                 }
@@ -137,8 +137,8 @@ namespace DATABASE
                     animal.DESCRICAO = row["descricao"].ToString();
                     byte[] an = (byte[])row["imagem"];
                     animal.IMAGEM = System.Text.Encoding.UTF8.GetString(an);
-                    animal.LATITUDE = row["latitude"].ToString();
-                    animal.LONGITUDE = row["longitude"].ToString();
+                    animal.LATITUDE = Convert.ToDecimal(row["latitude"]);
+                    animal.LONGITUDE = Convert.ToDecimal(row["longitude"]);
                     animal.SEXO = row["sexo"].ToString();
                     animal.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idusuario"]);
 

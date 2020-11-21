@@ -90,10 +90,10 @@ namespace BLL
 
             foreach (var animal in animais)
             {
-                string latitude = animal.LATITUDE;
+                string latitude = animal.LATITUDE.ToString();
                 latitude = latitude.Insert(3, ".");
 
-                string longitude = animal.LONGITUDE;
+                string longitude = animal.LONGITUDE.ToString();
                 longitude = longitude.Insert(3, ".");
 
                 string latlng = latitude + "," + longitude;

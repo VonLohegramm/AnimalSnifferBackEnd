@@ -13,10 +13,10 @@ namespace BLL
 
         public void CadastrarAnimal(ANIMAL animal)
         {
-            if (string.IsNullOrEmpty(animal.LATITUDE))
+            if (animal.LATITUDE == null)
                 throw new Exception("Informe a latitude");
 
-            if (string.IsNullOrEmpty(animal.LONGITUDE))
+            if (animal.LONGITUDE == null)
                 throw new Exception("Informe a longitude");
 
             if (string.IsNullOrEmpty(animal.RACA))
