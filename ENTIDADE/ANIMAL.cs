@@ -16,9 +16,9 @@ namespace ENTIDADE
         [JsonProperty(PropertyName = "descricao")]
         public string DESCRICAO;
         [JsonProperty(PropertyName = "latitude")]
-        public decimal LATITUDE;
+        public string LATITUDE;
         [JsonProperty(PropertyName = "longitude")]
-        public decimal LONGITUDE;
+        public string LONGITUDE;
         [JsonProperty(PropertyName = "imagem")]
         public string IMAGEM;
         [JsonProperty(PropertyName = "ativo")]
