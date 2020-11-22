@@ -95,8 +95,7 @@ namespace DATABASE
                     animal.RACA = dt.Rows[0]["raca"].ToString();
                     animal.TIPO = dt.Rows[0]["tipo"].ToString();
                     animal.DESCRICAO = dt.Rows[0]["descricao"].ToString();
-                    byte[] an = (byte[])dt.Rows[0]["imagem"];
-                    animal.IMAGEM = System.Text.Encoding.UTF8.GetString(an);
+                    animal.IMAGEM = dt.Rows[0]["imagem"].ToString();
                     animal.LATITUDE = dt.Rows[0]["latitude"].ToString();
                     animal.LONGITUDE = dt.Rows[0]["longitude"].ToString();
                     animal.SEXO = dt.Rows[0]["sexo"].ToString();
@@ -135,12 +134,12 @@ namespace DATABASE
                     animal.RACA = row["raca"].ToString();
                     animal.TIPO = row["tipo"].ToString();
                     animal.DESCRICAO = row["descricao"].ToString();
-                    byte[] an = (byte[])row["imagem"];
-                    animal.IMAGEM = System.Text.Encoding.UTF8.GetString(an);
+                    animal.IMAGEM = row["imagem"].ToString();
                     animal.LATITUDE = row["latitude"].ToString();
                     animal.LONGITUDE = row["longitude"].ToString();
                     animal.SEXO = row["sexo"].ToString();
                     animal.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idusuario"]);
+                    animal.ATIVO = true;
 
                     animais.Add(animal);
                     animal = new ANIMAL();
