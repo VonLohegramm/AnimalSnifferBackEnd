@@ -62,13 +62,13 @@ namespace AnimalSniffer.Controllers
             }
         }
 
-        [HttpDelete]
-        public IActionResult DeleteAnimal(ANIMAL animal)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAnimal(int id)
         {
             try
             {
                 animal_bll = new ANIMAL_BLL();
-                animal_bll.RecolherAnimal(animal);
+                animal_bll.RecolherAnimal(id);
                 return Ok();
             }
             catch (Exception e)

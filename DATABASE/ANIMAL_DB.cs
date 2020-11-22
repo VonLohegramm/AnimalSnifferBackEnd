@@ -52,7 +52,7 @@ namespace DATABASE
         #endregion
 
         #region RecolherUsuario
-        public void RecolherAnimal(ANIMAL animal)
+        public void RecolherAnimal(int id)
         {
             string update = "update ANIMAL set ativo = @ativo where id = @id";
 
@@ -60,7 +60,7 @@ namespace DATABASE
             {
                 Dictionary<string, object> values = new Dictionary<string, object>
                 {
-                    { "@id", animal.ID },
+                    { "@id", id },
                     { "@ativo", false }
                 };
 

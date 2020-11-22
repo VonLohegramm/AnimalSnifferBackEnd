@@ -31,12 +31,12 @@ namespace BLL
             animal_db.InserirAnimal(animal);
         }
 
-        public void RecolherAnimal(ANIMAL animal)
+        public void RecolherAnimal(int id)
         {
-            if (animal.ID == 0)
+            if (id == 0)
                 throw new Exception("Informe o id do animal");
 
-            animal_db.RecolherAnimal(animal);
+            animal_db.RecolherAnimal(id);
         }
 
         public ANIMAL CarregarAnimal(int id)
