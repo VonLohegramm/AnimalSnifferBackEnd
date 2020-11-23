@@ -53,7 +53,7 @@ namespace AnimalSniffer.Controllers
             try
             {
                 animal_bll = new ANIMAL_BLL();
-                return new ObjectResult(animal_bll.CarregarAnimais());
+                return new ObjectResult(animal_bll.CarregarAnimaisAtivos());
             }
             catch (Exception e)
             {

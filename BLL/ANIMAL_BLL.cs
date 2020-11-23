@@ -47,7 +47,7 @@ namespace BLL
             return animal_db.SelecionarAnimal(id);
         }
 
-        public List<ANIMAL> CarregarAnimais()
+        public List<ANIMAL> CarregarAnimaisAtivos()
         {
             List<ANIMAL> animais = animal_db.SelecionarAnimaisAtivos();
             
@@ -55,6 +55,13 @@ namespace BLL
             {
                 animal.AVALIACOES = avaliacao_bll.CarregarAvaliacoesAnimal(animal);
             }
+
+            return animais;
+        }
+
+        public List<ANIMAL> CarregarAnimais()
+        {
+            List<ANIMAL> animais = animal_db.SelecionarAnimais();
 
             return animais;
         }

@@ -154,6 +154,47 @@ namespace DATABASE
         }
         #endregion
 
+        #region SelecionarAnimais
+        public List<ANIMAL> SelecionarAnimais()
+        {
+            string select = "select * from ANIMAL";
+
+            List<ANIMAL> animais = new List<ANIMAL>();
+            ANIMAL animal = new ANIMAL();
+
+            try
+            {
+                Dictionary<string, object> values = new Dictionary<string, object>
+                {
+                };
+
+                DataTable dt = SelectTableMySQL(select, values);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    animal.ID = Convert.ToInt32(row["id"].ToString());
+                    animal.RACA = row["raca"].ToString();
+                    animal.TIPO = row["tipo"].ToString();
+                    animal.DESCRICAO = row["descricao"].ToString();
+                    animal.IMAGEM = row["imagem"].ToString();
+                    animal.LATITUDE = row["latitude"].ToString();
+                    animal.LONGITUDE = row["longitude"].ToString();
+                    animal.SEXO = row["sexo"].ToString();
+                    animal.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idusuario"]);
+
+                    animais.Add(animal);
+                    animal = new ANIMAL();
+                }
+
+                return animais;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
         #region QueryTableMySQL
         public void QueryTableMySQL(string query, Dictionary<string, object> values)
         {
