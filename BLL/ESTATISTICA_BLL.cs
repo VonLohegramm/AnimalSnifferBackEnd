@@ -31,7 +31,7 @@ namespace BLL
             {
                 { "Salto",  0 },
                 { "Itu", 0 },
-                { "Indaiatuba", 0 }
+                { "Sorocaba", 0 }
             };
 
             Dictionary<string, int> animaisInfo = new Dictionary<string, int>
@@ -48,27 +48,27 @@ namespace BLL
             {
                 { "Labrador",  0 },
                 { "Rottweiler", 0 },
-                { "Golden Retriever", 0 },
-                { "Vira Lata", 0 },
+                { "Golden_Retriever", 0 },
+                { "Vira_Lata_Cachorro", 0 },
                 { "Poodle", 0 },
-                { "Pastor Alemão", 0 },
-                { "Spitz Alemão", 0 },
+                { "Pastor_Alemão", 0 },
+                { "Spitz_Alemão", 0 },
                 { "Buldogue", 0 },
-                { "Shih-Tzu",0 },
+                { "Shih_Tzu",0 },
                 { "Maltês", 0 },
-                { "Indefinido", 0 }
+                { "Indefinido_Cachorro", 0 }
             };
 
             Dictionary<string, int> RacaGatoInfo = new Dictionary<string, int>
             {
                 { "Persa",  0 },
                 { "Siamês", 0 },
-                { "Vira-lata", 0 },
+                { "Vira_Lata_Gato", 0 },
                 { "Siberiano", 0 },
                 { "Sphynx", 0 },
                 { "Angorá", 0 },
                 { "Abissínio", 0 },
-                { "Indefinido", 0 }
+                { "Indefinido_Gato", 0 }
             };
 
             cidades = calcularEstastiscaCidade(animais, cidades);
