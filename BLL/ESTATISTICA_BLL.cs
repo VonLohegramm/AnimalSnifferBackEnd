@@ -34,7 +34,7 @@ namespace BLL
             {
                 { "Salto",  0 },
                 { "Itu", 0 },
-                { "Indaiatuba", 0 }
+                { "Sorocaba", 0 }
             };
 
             Dictionary<string, int> animaisInfo = new Dictionary<string, int>
