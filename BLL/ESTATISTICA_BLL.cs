@@ -24,8 +24,6 @@ namespace BLL
         public Dictionary<string, int> CarregarEstatistica()
         {
             ANIMAL_BLL animal_bll = new ANIMAL_BLL();
-            List<CompareOptions> compares = new List<CompareOptions>();
-            compares.Add(CompareOptions.IgnoreCase);
 
             List<ANIMAL> animais = animal_bll.CarregarAnimais();
             List<Dictionary<string, int>> racas;
@@ -57,7 +55,7 @@ namespace BLL
                 { "PastorAlemao", 0 },
                 { "SpitzAlemao", 0 },
                 { "Buldogue", 0 },
-                { "Shih-Tzu",0 },
+                { "ShihTzu",0 },
                 { "Maltes", 0 },
                 { "IndefinidoCachorro", 0 }
             };
@@ -65,7 +63,7 @@ namespace BLL
             Dictionary<string, int> RacaGatoInfo = new Dictionary<string, int>
             {
                 { "Persa",  0 },
-                { "Siamês", 0 },
+                { "Siames", 0 },
                 { "ViralataGato", 0 },
                 { "Siberiano", 0 },
                 { "Sphynx", 0 },
