@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 
@@ -23,6 +24,8 @@ namespace BLL
         public Dictionary<string, int> CarregarEstatistica()
         {
             ANIMAL_BLL animal_bll = new ANIMAL_BLL();
+            List<CompareOptions> compares = new List<CompareOptions>();
+            compares.Add(CompareOptions.IgnoreCase);
 
             List<ANIMAL> animais = animal_bll.CarregarAnimais();
             List<Dictionary<string, int>> racas;
@@ -48,27 +51,27 @@ namespace BLL
             {
                 { "Labrador",  0 },
                 { "Rottweiler", 0 },
-                { "Golden Retriever", 0 },
-                { "Vira Lata", 0 },
+                { "GoldenRetriever", 0 },
+                { "ViraLataCachorro", 0 },
                 { "Poodle", 0 },
-                { "Pastor Alemão", 0 },
-                { "Spitz Alemão", 0 },
+                { "PastorAlemao", 0 },
+                { "SpitzAlemao", 0 },
                 { "Buldogue", 0 },
                 { "Shih-Tzu",0 },
-                { "Maltês", 0 },
-                { "Indefinido", 0 }
+                { "Maltes", 0 },
+                { "IndefinidoCachorro", 0 }
             };
 
             Dictionary<string, int> RacaGatoInfo = new Dictionary<string, int>
             {
                 { "Persa",  0 },
                 { "Siamês", 0 },
-                { "Vira-lata", 0 },
+                { "ViralataGato", 0 },
                 { "Siberiano", 0 },
                 { "Sphynx", 0 },
-                { "Angorá", 0 },
-                { "Abissínio", 0 },
-                { "Indefinido", 0 }
+                { "Angora", 0 },
+                { "Abissinio", 0 },
+                { "IndefinidoGato", 0 }
             };
 
             cidades = calcularEstastiscaCidade(animais, cidades);
@@ -79,7 +82,7 @@ namespace BLL
             RacaGatoInfo = racas[1];
 
             return cidades.Union(animaisInfo).ToDictionary(k => k.Key, v => v.Value).Union(RacaCachorroInfo).ToDictionary(k => k.Key, v => v.Value)
-                .Union(RacaGatoInfo).ToDictionary(k => k.Key, v => v.Value);
+               .Union(RacaGatoInfo).ToDictionary(k => k.Key, v => v.Value);
 
         }
 
@@ -169,6 +172,7 @@ namespace BLL
         public List<Dictionary<string, int>> calcularEstatisticasRaca(List<ANIMAL> animais, Dictionary<string, int> RacaCachorroInfo,
             Dictionary<string, int> RacaGatoInfo)
         {
+
             List<Dictionary<string, int>> racas = new List<Dictionary<string, int>>();
 
             List<string> racasGatos = new List<string>(RacaGatoInfo.Keys);
@@ -182,9 +186,36 @@ namespace BLL
                     case "Cachorro":
                         foreach (var raca in racasCachorros)
                         {
-                            if(raca == animal.RACA)
+                            if (String.Compare(raca, animal.RACA, CultureInfo.GetCultureInfo("pt-BR"), CompareOptions.IgnoreNonSpace) == 0 ||
+                                String.Compare(raca, animal.RACA, CultureInfo.GetCultureInfo("pt-BR"), CompareOptions.IgnoreSymbols) == 0)
+                                {
+                                    RacaCachorroInfo[raca] = RacaCachorroInfo[raca] + 1;
+                                    break;
+                                }
+                                    
+
+                            if(animal.RACA == "Indefinido")
                             {
-                                RacaCachorroInfo[raca] = RacaCachorroInfo[raca] + 1;
+                                RacaCachorroInfo["IndefinidoCachorro"] = RacaCachorroInfo["IndefinidoCachorro"] + 1;
+                                break;
+                            }
+
+                            if(animal.RACA == "Pastor Alemão")
+                            {
+                                RacaCachorroInfo["PastorAlemao"] = RacaCachorroInfo["PastorAlemao"] + 1;
+                                break;
+                            }
+
+                            if (animal.RACA == "Spitz Alemão")
+                            {
+                                RacaCachorroInfo["Spitz Alemão"] = RacaCachorroInfo["Spitz Alemão"] + 1;
+                                break;
+                            }
+
+                            if (animal.RACA == "Vira Lata")
+                            {
+                                RacaCachorroInfo["ViraLataCachorro"] = RacaCachorroInfo["ViraLataCachorro"] + 1;
+                                break;
                             }
                         }
                         break;
@@ -192,9 +223,18 @@ namespace BLL
                     case "Gato":
                         foreach (var raca in racasGatos)
                         {
-                            if (raca == animal.RACA)
+                            if (String.Compare(raca, animal.RACA, CultureInfo.GetCultureInfo("pt-BR"), CompareOptions.IgnoreNonSpace) == 0 ||
+                                String.Compare(raca, animal.RACA, CultureInfo.GetCultureInfo("pt-BR"), CompareOptions.IgnoreSymbols) == 0)
+                                    RacaGatoInfo[raca] = RacaGatoInfo[raca] + 1;
+
+                            if (animal.RACA == "Indefinido")
                             {
-                                RacaGatoInfo[raca] = RacaGatoInfo[raca] + 1;
+                                RacaGatoInfo["IndefinidoGato"] = RacaGatoInfo["IndefinidoGato"] + 1;
+                            }
+
+                            else if (animal.RACA == "Vira Lata")
+                            {
+                                RacaGatoInfo["ViraLataGato"] = RacaGatoInfo["ViraLataGato"] + 1;
                             }
                         }
                         break;
