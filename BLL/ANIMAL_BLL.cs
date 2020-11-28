@@ -44,7 +44,11 @@ namespace BLL
             if(id == 0)
                 throw new Exception("Informe o id do animal");
 
-            return animal_db.SelecionarAnimal(id);
+            ANIMAL animal = animal_db.SelecionarAnimal(id);
+
+            animal.AVALIACOES = avaliacao_bll.CarregarAvaliacoesAnimal(animal);
+
+            return animal;
         }
 
         public List<ANIMAL> CarregarAnimaisAtivos()
