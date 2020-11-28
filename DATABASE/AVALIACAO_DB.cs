@@ -68,8 +68,8 @@ namespace DATABASE
             {
                 Dictionary<string, object> values = new Dictionary<string, object>
                 {
-                    { "@tipo", avaliacao.IDUSUARIO },
-                    { "@raca", avaliacao.IDANIMAL }
+                    { "@idUsuario", avaliacao.IDUSUARIO },
+                    { "@idAnimal", avaliacao.IDANIMAL }
                 };
 
                 QueryTableMySQL(insert, values);
