@@ -40,10 +40,10 @@ namespace DATABASE
 
                 if (dt.Rows.Count > 0)
                 {
-                    foreach(var row in dt.Rows)
+                    foreach(DataRow row in dt.Rows)
                     {
-                        avaliacao.IDUSUARIO = Convert.ToInt32(dt.Rows[0]["idUsuario"].ToString());
-                        avaliacao.IDANIMAL = Convert.ToInt32(dt.Rows[0]["idAnimal"].ToString());
+                        avaliacao.IDUSUARIO = Convert.ToInt32(row["idUsuario"].ToString());
+                        avaliacao.IDANIMAL = Convert.ToInt32(row["idAnimal"].ToString());
 
                         avaliacoes.Add(avaliacao);
                         avaliacao = new AVALIACAO();

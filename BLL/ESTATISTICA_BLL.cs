@@ -210,7 +210,7 @@ namespace BLL
                                 break;
                             }
 
-                            if (animal.RACA == "Vira Lata")
+                            if (animal.RACA == "Vira lata")
                             {
                                 RacaCachorroInfo["ViraLataCachorro"] = RacaCachorroInfo["ViraLataCachorro"] + 1;
                                 break;
@@ -228,11 +228,13 @@ namespace BLL
                             if (animal.RACA == "Indefinido")
                             {
                                 RacaGatoInfo["IndefinidoGato"] = RacaGatoInfo["IndefinidoGato"] + 1;
+                                break;
                             }
 
-                            else if (animal.RACA == "Vira Lata")
+                            else if (animal.RACA == "Vira lata")
                             {
-                                RacaGatoInfo["ViraLataGato"] = RacaGatoInfo["ViraLataGato"] + 1;
+                                RacaGatoInfo["ViralataGato"] = RacaGatoInfo["ViralataGato"] + 1;
+                                break;
                             }
                         }
                         break;
